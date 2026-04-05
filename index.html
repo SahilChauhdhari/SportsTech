@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Technology Affects Sports</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#06080f;--paper:#f0ece3;--neon:#00ffe0;--fire:#ff3d2e;
+  --gold:#ffd000;--dim:#0e1621;--purple:#9b6bff;--card:#111827;
+}
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+body{font-family:'Syne',sans-serif;background:var(--ink);color:var(--paper);overflow-x:hidden;cursor:none}
+
+/* ── CURSOR ── */
+#cur{position:fixed;width:12px;height:12px;border:2px solid var(--neon);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .18s,height .18s;mix-blend-mode:difference}
+#cur.big{width:38px;height:38px;background:rgba(0,255,224,.12)}
+#cur-trail{position:fixed;width:6px;height:6px;background:var(--neon);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.4}
+
+/* ── SLIDES ── */
+.slide{min-height:100vh;width:100%;scroll-snap-align:start;position:relative;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+
+/* ── NAV ── */
+#nav{position:fixed;right:1.6rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:.6rem;z-index:100}
+.nd{width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(255,255,255,.22);cursor:pointer;transition:all .3s}
+.nd.on{background:var(--neon);border-color:var(--neon);transform:scale(1.4)}
+
+/* ── S1 TITLE ── */
+#s1{background:var(--ink);justify-content:flex-end;padding:0}
+#c3d{position:absolute;inset:0;z-index:0}
+.s1c{position:relative;z-index:2;padding:6vw 7vw 5vw}
+.eye{font-size:clamp(9px,1vw,12px);letter-spacing:.35em;color:var(--neon);text-transform:uppercase;margin-bottom:1.2rem;opacity:0;animation:fu .7s .2s forwards}
+.htitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,12vw,150px);line-height:.88;color:var(--paper);opacity:0;animation:fu .8s .4s forwards}
+.htitle em{color:var(--neon);font-style:normal;display:block;text-shadow:0 0 50px rgba(0,255,224,.45)}
+.hsub{font-family:'DM Serif Display',serif;font-size:clamp(14px,1.7vw,19px);color:rgba(240,236,227,.42);font-style:italic;margin-top:1.4rem;opacity:0;animation:fu .7s .8s forwards}
+.scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.3em;color:rgba(240,236,227,.22);text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.4rem;opacity:0;animation:fu .7s 1.2s forwards}
+.scroll-cue::after{content:'';width:1px;height:36px;background:linear-gradient(var(--neon),transparent);animation:pulse 2s infinite}
+
+/* ── S2 BEFORE/AFTER ── */
+#s2{padding:5vw;gap:2rem}
+.stitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5.5vw,72px);line-height:1}
+.stitle em{font-family:'DM Serif Display',serif;font-style:italic;color:var(--neon);font-size:.72em}
+.ba{position:relative;width:100%;max-width:1100px;height:clamp(280px,46vh,480px);border-radius:4px;overflow:hidden;cursor:ew-resize;box-shadow:0 24px 80px rgba(0,0,0,.7);user-select:none}
+.ba-b{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem}
+.ba-bg-old{position:absolute;inset:0;background:#070707}
+/* old pitch stripes */
+.old-pitch{position:absolute;bottom:0;left:0;right:0;height:50%;background:repeating-linear-gradient(0deg,#0d0d0d 0,#0d0d0d 18px,#111 18px,#111 36px)}
+/* old floodlights */
+.old-pole{position:absolute;bottom:50%;width:5px;background:#1e1e1e;border-radius:2px 2px 0 0}
+.old-arm{position:absolute;height:5px;background:#1a1a1a;border-radius:2px}
+/* old crowd silhouettes */
+.old-crowd{position:absolute;top:6%;left:3%;right:3%;height:40%;display:flex;flex-wrap:wrap;gap:2px;overflow:hidden}
+.cr{display:inline-block;width:6px;height:9px;border-radius:3px 3px 0 0;background:#1a1a1a}
+
+.ba-a{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem;clip-path:inset(0 0 0 50%)}
+.ba-bg-new{position:absolute;inset:0;background:#020c16}
+/* new pitch */
+.new-pitch{position:absolute;bottom:0;left:0;right:0;height:50%;background:repeating-linear-gradient(0deg,#061a08 0,#061a08 22px,#081e0a 22px,#081e0a 44px)}
+.new-pitch::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 120%,rgba(0,255,100,.08),transparent 60%)}
+/* light beams */
+.beam{position:absolute;bottom:50%;width:2px;transform-origin:bottom;background:linear-gradient(to top,rgba(0,255,224,.65),transparent);border-radius:1px;animation:flick 5s infinite alternate}
+/* LED flare dots */
+.lf{position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 18px 7px rgba(180,230,255,.85),0 0 50px 16px rgba(80,180,255,.4)}
+/* tracking dots on pitch */
+.tdot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%)}
+/* VAR screen */
+.var-mini{position:absolute;top:14%;left:4%;background:#040e18;border:1px solid rgba(0,255,224,.28);border-radius:3px;padding:.25rem .6rem;font-size:9px;color:var(--neon);letter-spacing:.1em}
+/* drone */
+.drone-icon{position:absolute;top:16%;right:18%;font-size:1.3rem;animation:float 3.5s ease-in-out infinite}
+
+.ba-div{position:absolute;top:0;bottom:0;width:3px;background:#fff;z-index:10;left:50%;transform:translateX(-50%);filter:drop-shadow(0 0 6px #fff)}
+.ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 0 5px rgba(255,255,255,.18),0 4px 20px rgba(0,0,0,.5)}
+.ba-tag{display:inline-block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:.22rem .6rem;border:1px solid currentColor;border-radius:2px;margin-bottom:.4rem}
+.ba-ht{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2.5vw,32px);line-height:1.05}
+.ba-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.bchip{font-size:10px;letter-spacing:.07em;padding:.18rem .55rem;border:1px solid;border-radius:2px}
+
+/* ── S3 CASE STUDIES ── */
+#s3{padding:5vw;padding-top:6vw}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5px;max-width:1100px}
+.cc{background:var(--card);padding:2rem;position:relative;overflow:hidden;cursor:pointer;transition:transform .3s}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--a,var(--neon));transform:scaleX(0);transform-origin:left;transition:transform .38s}
+.cc:hover::before{transform:scaleX(1)}
+.cc:hover{transform:translateY(-4px)}
+.cc-em{font-size:2rem;margin-bottom:.8rem;display:block}
+.cc-yr{font-size:10px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:.3rem}
+.cc-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2vw,24px);line-height:1.1;margin-bottom:.65rem}
+.cc-b{font-size:clamp(12px,1.1vw,13.5px);color:rgba(240,236,227,.52);line-height:1.65}
+.cc-v{margin-top:.9rem;font-size:11px;font-weight:700;letter-spacing:.04em}
+
+/* ── S4 WEARABLES ── */
+#s4{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;padding:0}
+.s4l{background:var(--dim);display:flex;flex-direction:column;justify-content:center;padding:5vw;position:relative;overflow:hidden}
+.s4r{background:var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:4vw;gap:1.1rem;position:relative;overflow:hidden}
+.s4-bg{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:26vw;line-height:1;color:rgba(0,255,224,.025);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap}
+.ath-svg{position:absolute;right:-40px;bottom:0;opacity:.05;pointer-events:none}
+.bnum{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,88px);line-height:.9;color:var(--neon)}
+.blbl{font-size:clamp(11px,1.1vw,13px);color:rgba(240,236,227,.4);margin-top:.2rem}
+/* HUD interactive */
+.hud{width:100%;max-width:340px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:1rem 1.2rem;position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.hud:hover{border-color:var(--hc,var(--neon));box-shadow:0 0 22px rgba(0,255,224,.12)}
+.hud::after{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--hc,var(--neon));border-radius:0 3px 3px 0}
+.hud-top{display:flex;align-items:center;gap:.8rem}
+.hud-ico{font-size:1.4rem}
+.hud-lbl{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,236,227,.32)}
+.hud-val{font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,1.8vw,22px);color:var(--hc,var(--neon));margin-top:.08rem}
+.bar-t{height:5px;background:rgba(255,255,255,.07);border-radius:3px;margin-top:.9rem;overflow:visible;cursor:pointer;position:relative}
+.bar-f{height:100%;border-radius:3px;background:var(--hc,var(--neon));width:0;transition:width 1.4s cubic-bezier(.34,1.56,.64,1);position:relative}
+.bar-f::after{content:'';position:absolute;right:-5px;top:-4px;width:12px;height:12px;background:var(--hc,var(--neon));border-radius:50%;box-shadow:0 0 10px var(--hc,var(--neon))}
+.f1box{width:100%;max-width:340px;border:1px solid rgba(255,208,0,.22);background:rgba(255,208,0,.035);border-radius:6px;padding:.9rem 1.1rem;font-size:12.5px;color:rgba(240,236,227,.6);line-height:1.65}
+.f1box strong{color:var(--gold);font-size:10px;letter-spacing:.15em;text-transform:uppercase;display:block;margin-bottom:.3rem}
+
+/* ── S5 VAR ── */
+#s5{padding:5vw;background:#020810;align-items:center;justify-content:center;gap:2rem}
+.var-screen{width:100%;max-width:960px;border:1px solid rgba(0,255,224,.16);border-radius:6px;overflow:hidden;box-shadow:0 0 80px rgba(0,255,224,.05),0 40px 100px rgba(0,0,0,.7)}
+.var-bar{background:rgba(0,255,224,.07);border-bottom:1px solid rgba(0,255,224,.16);padding:.65rem 1.5rem;display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--neon)}
+.blink{animation:blink 1s infinite}
+.var-body{padding:2rem;display:grid;grid-template-columns:1fr 1.2fr;gap:2rem;align-items:start}
+.verdict{font-family:'Bebas Neue',sans-serif;font-size:clamp(55px,7.5vw,96px);line-height:.82;color:var(--fire);text-shadow:0 0 40px rgba(255,61,46,.35)}
+.var-det{font-size:12.5px;color:rgba(240,236,227,.42);line-height:1.75;margin-top:.8rem}
+/* Pitch diagram */
+.pitch{background:#020d06;border:1px solid rgba(0,120,40,.2);border-radius:4px;overflow:hidden;aspect-ratio:16/9;position:relative}
+.off-line{position:absolute;top:0;bottom:0;width:2px;background:var(--fire);box-shadow:0 0 8px var(--fire);left:62%}
+.pdot{position:absolute;width:11px;height:11px;border-radius:50%;transform:translate(-50%,-50%)}
+.ball-dot{position:absolute;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;transform:translate(-50%,-50%)}
+.var-trail{position:absolute;height:1.5px;background:linear-gradient(90deg,transparent,var(--gold));transform-origin:left}
+.off-label{position:absolute;background:rgba(255,61,46,.14);border:1px solid var(--fire);border-radius:3px;padding:.18rem .45rem;font-size:9px;color:var(--fire);letter-spacing:.1em;white-space:nowrap;transform:translateX(-50%)}
+.var-footer{border-top:1px solid rgba(255,255,255,.05);padding:.75rem 1.5rem;font-size:10px;color:rgba(240,236,227,.22);letter-spacing:.07em}
+.sq{font-family:'DM Serif Display',serif;font-size:clamp(14px,1.8vw,19px);font-style:italic;color:rgba(240,236,227,.42);text-align:center;max-width:760px}
+
+/* ── S6 CULTURE ── */
+#s6{padding:5vw}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;max-width:1100px;background:rgba(255,255,255,.05)}
+.sc{background:var(--ink);padding:2.4rem 2rem;position:relative}
+.sc-num{font-family:'Bebas Neue',sans-serif;font-size:5rem;line-height:1;color:rgba(255,255,255,.04);position:absolute;top:.7rem;right:1.2rem}
+.sc-ico{font-size:1.9rem;margin-bottom:.9rem}
+.sc-tag{font-size:10px;letter-spacing:.24em;text-transform:uppercase;margin-bottom:.4rem}
+.sc-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(19px,2.1vw,26px);line-height:1.1;margin-bottom:.65rem}
+.sc-b{font-size:13px;color:rgba(240,236,227,.5);line-height:1.7}
+
+/* ── S7 VR ── */
+#s7{background:#03010a;display:grid;grid-template-columns:1fr 1fr;min-height:100vh;position:relative;overflow:hidden}
+#s7::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(155,107,255,.013) 3px,rgba(155,107,255,.013) 4px);pointer-events:none;z-index:1}
+.s7l{display:flex;flex-direction:column;justify-content:center;padding:5vw;position:relative;z-index:2}
+.s7r{display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.vr-env{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#18004a 0%,#06000f 55%,#000 100%)}
+/* perspective grid floor */
+.grid-floor{position:absolute;bottom:0;left:0;right:0;height:55%;overflow:hidden;perspective:350px}
+.grid-inner{position:absolute;inset:0;transform:perspective(350px) rotateX(62deg) translateY(-15%)}
+.scan-line{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(155,107,255,.7),transparent);animation:scan 2.8s linear infinite;pointer-events:none;z-index:4;top:0}
+/* VR Helmet 3D CSS */
+.helmet-wrap{position:relative;z-index:5;filter:drop-shadow(0 0 40px rgba(155,50,255,.55));animation:float 5s ease-in-out infinite}
+/* floating HUD labels */
+.vr-lbl{position:absolute;background:rgba(5,0,18,.8);border:1px solid rgba(155,107,255,.38);border-radius:4px;padding:.35rem .75rem;font-size:11px;z-index:6;white-space:nowrap;line-height:1.45}
+.vr-lbl span{display:block;font-size:9px;color:rgba(240,236,227,.35);margin-top:.15rem}
+.vr-stat-row{display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap}
+.vs-n{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--purple);line-height:1}
+.vs-l{font-size:11px;color:rgba(240,236,227,.35);margin-top:.15rem}
+
+/* ── S8 GOOD/BAD ── */
+#s8{padding:5vw;gap:2rem}
+.vs-split{display:grid;grid-template-columns:1fr 1fr;gap:1px;max-width:1100px;background:rgba(255,255,255,.04)}
+.vc{background:var(--ink)}
+.vh{padding:1.1rem 2rem;display:flex;align-items:center;gap:.8rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.vct{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.04em}
+.vrow{padding:1.05rem 2rem;border-bottom:1px solid rgba(255,255,255,.03);transition:background .2s}
+.vrow:hover{background:rgba(255,255,255,.025)}
+.vrt{font-weight:700;font-size:13.5px;margin-bottom:.28rem}
+.vrb{font-size:12px;color:rgba(240,236,227,.42);line-height:1.6}
+
+/* ── S9 FUTURE ── */
+#s9{padding:5vw;background:#020508}
+.fut-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;max-width:1100px;background:rgba(255,255,255,.04)}
+.fc{background:#020508;padding:2.4rem;position:relative;overflow:hidden;cursor:pointer;transition:background .3s}
+.fc:hover{background:#060d18}
+.fc::before{content:attr(data-y);position:absolute;bottom:.8rem;right:1.4rem;font-family:'Bebas Neue',sans-serif;font-size:5.5rem;line-height:1;color:rgba(255,255,255,.025);pointer-events:none}
+.fc-i{font-size:2.4rem;margin-bottom:1.2rem}
+.fc-t{font-family:'Bebas Neue',sans-serif;font-size:clamp(21px,2.6vw,32px);line-height:1;margin-bottom:.65rem}
+.fc-b{font-size:13px;color:rgba(240,236,227,.46);line-height:1.7}
+
+/* ── S10 END ── */
+#s10{background:var(--ink);align-items:center;justify-content:center;text-align:center;padding:6vw;position:relative}
+.end-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(0,255,224,.05) 0%,transparent 65%);pointer-events:none}
+.final{font-family:'DM Serif Display',serif;font-size:clamp(28px,5vw,66px);line-height:1.15;max-width:860px;font-style:italic}
+.final span{color:var(--neon);font-style:normal;font-family:'Bebas Neue',sans-serif;font-size:1.08em}
+.fsub{margin-top:1.7rem;font-size:clamp(13px,1.4vw,17px);color:rgba(240,236,227,.36);max-width:540px;line-height:1.75}
+.pills{display:flex;gap:.85rem;flex-wrap:wrap;justify-content:center;margin-top:2.2rem}
+.pill{padding:.42rem 1.25rem;border:1px solid rgba(0,255,224,.28);border-radius:100px;font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--neon);cursor:pointer;transition:all .3s}
+.pill:hover{background:var(--neon);color:var(--ink)}
+
+/* ── SOUND BTN ── */
+#soundbtn{position:fixed;bottom:1.4rem;right:1.4rem;z-index:200;background:rgba(0,255,224,.08);border:1px solid rgba(0,255,224,.25);color:var(--neon);border-radius:50%;width:42px;height:42px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+#soundbtn:hover{background:rgba(0,255,224,.18)}
+
+/* ── SEYE / REVEAL ── */
+.seye{font-size:10px;letter-spacing:.35em;color:var(--neon);text-transform:uppercase;margin-bottom:.7rem}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .72s,transform .72s}
+.rv.in{opacity:1;transform:none}
+.rv-d1{transition-delay:.1s}.rv-d2{transition-delay:.2s}.rv-d3{transition-delay:.3s}
+
+/* ── KEYFRAMES ── */
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{opacity:.2}50%{opacity:1}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes flick{0%,100%{opacity:.25}50%{opacity:.55}}
+@keyframes scan{from{top:-4px}to{top:100%}}
+@keyframes gridScroll{from{background-position-y:0}to{background-position-y:60px}}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-trail"></div>
+<nav id="nav"></nav>
+<button id="soundbtn" title="Toggle sound">🔇</button>
+
+<!-- ══ S1 TITLE ══ -->
+<section class="slide" id="s1">
+  <canvas id="c3d"></canvas>
+  <div class="s1c">
+    <p class="eye">A Visual Story — 2025</p>
+    <h1 class="htitle">HOW<br><em>TECHNOLOGY</em>AFFECTS<br>SPORTS</h1>
+    <p class="hsub">From a referee's gut feeling to machines that never blink.</p>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</section>
+
+<!-- ══ S2 THEN vs NOW ══ -->
+<section class="slide" id="s2">
+  <p class="seye rv">The Same Sport. Two Different Worlds.</p>
+  <h2 class="stitle rv rv-d1">THE GAME<br><em>then & now</em></h2>
+  <div class="ba rv rv-d2" id="baWrap">
+    <!-- BEFORE -->
+    <div class="ba-b">
+      <div class="ba-bg-old">
+        <div class="old-pitch"></div>
+        <!-- crowd silhouettes -->
+        <div class="old-crowd" id="oldCrowd"></div>
+        <!-- floodlight poles L -->
+        <div class="old-pole" style="left:10%;height:38%"></div>
+        <div class="old-arm" style="bottom:88%;left:6%;width:50px"></div>
+        <!-- floodlight poles R -->
+        <div class="old-pole" style="right:10%;height:38%"></div>
+        <div class="old-arm" style="bottom:88%;right:6%;width:50px"></div>
+        <!-- old-style TV bug -->
+        <div style="position:absolute;top:6%;right:4%;background:#111;border:1px solid #2a2a2a;padding:.2rem .5rem;font-size:9px;color:#444;letter-spacing:.1em;border-radius:2px">📺 BBC SPORT</div>
+        <!-- centre circle faint -->
+        <div style="position:absolute;bottom:52%;left:50%;transform:translate(-50%,50%);width:80px;height:40px;border:1px solid #1a1a1a;border-radius:50%"></div>
+      </div>
+      <span class="ba-tag" style="color:#444;border-color:#333">Before Technology</span>
+      <div class="ba-ht" style="color:#444">One camera.<br>One referee.<br>No data.</div>
+      <div class="ba-chips">
+        <span class="bchip" style="color:#333;border-color:#2a2a2a">Manual Board</span>
+        <span class="bchip" style="color:#333;border-color:#2a2a2a">Gut Feeling</span>
+        <span class="bchip" style="color:#333;border-color:#2a2a2a">Zero Analytics</span>
+      </div>
+    </div>
+    <!-- AFTER -->
+    <div class="ba-a" id="baAfter">
+      <div class="ba-bg-new">
+        <div class="new-pitch"></div>
+        <!-- light beams -->
+        <div class="beam" style="left:10%;height:65%;transform:rotate(-14deg)"></div>
+        <div class="beam" style="left:26%;height:78%"></div>
+        <div class="beam" style="left:50%;height:82%"></div>
+        <div class="beam" style="right:26%;height:78%"></div>
+        <div class="beam" style="right:10%;height:65%;transform:rotate(14deg)"></div>
+        <!-- LED flares -->
+        <div class="lf" style="top:3%;left:9%"></div>
+        <div class="lf" style="top:3%;left:25%"></div>
+        <div class="lf" style="top:2%;left:50%"></div>
+        <div class="lf" style="top:3%;right:25%"></div>
+        <div class="lf" style="top:3%;right:9%"></div>
+        <!-- drone -->
+        <div class="drone-icon">🚁</div>
+        <!-- VAR indicator -->
+        <div class="var-mini">VAR ● LIVE</div>
+        <!-- GPS tracking dots on pitch -->
+        <div class="tdot" style="background:var(--neon);box-shadow:0 0 12px var(--neon);left:40%;bottom:32%;animation:blink 1.6s infinite"></div>
+        <div class="tdot" style="background:#ff6b6b;box-shadow:0 0 10px #ff6b6b;left:57%;bottom:28%;animation:blink 2s .3s infinite"></div>
+        <div class="tdot" style="background:var(--gold);box-shadow:0 0 10px var(--gold);left:65%;bottom:35%;animation:blink 1.8s .6s infinite"></div>
+        <!-- spider cam wire -->
+        <div style="position:absolute;top:22%;left:5%;right:5%;height:1px;background:rgba(255,255,255,.12)"></div>
+        <div style="position:absolute;top:18%;left:45%;width:10px;height:10px;border-radius:50%;background:#666;border:1px solid #999;font-size:8px;display:flex;align-items:center;justify-content:center">📷</div>
+      </div>
+      <span class="ba-tag" style="color:var(--neon);border-color:rgba(0,255,224,.45)">After Technology</span>
+      <div class="ba-ht" style="color:#fff">50 cameras.<br>AI officiating.<br>Live body data.</div>
+      <div class="ba-chips">
+        <span class="bchip" style="color:var(--neon);border-color:rgba(0,255,224,.38)">VAR + Hawk-Eye</span>
+        <span class="bchip" style="color:var(--neon);border-color:rgba(0,255,224,.38)">360° Drones</span>
+        <span class="bchip" style="color:var(--neon);border-color:rgba(0,255,224,.38)">GPS Sensors</span>
+      </div>
+    </div>
+    <!-- DIVIDER -->
+    <div class="ba-div" id="baDivider"><div class="ba-handle">⇔</div></div>
+  </div>
+  <p style="font-size:11px;color:rgba(240,236,227,.22);margin-top:.5rem;letter-spacing:.12em">← DRAG TO COMPARE →</p>
+</section>
+
+<!-- ══ S3 CASE STUDIES ══ -->
+<section class="slide" id="s3" style="padding:5vw;padding-top:6vw">
+  <p class="seye rv">True Stories. Real Moments.</p>
+  <h2 class="stitle rv rv-d1" style="margin-bottom:2rem">MOMENTS TECH<br>CHANGED FOREVER</h2>
+  <div class="grid4 rv rv-d2">
+    <div class="cc" style="--a:#ff3d2e">
+      <span class="cc-em">⚽</span><div class="cc-yr" style="color:#ff3d2e">1986 · FIFA World Cup</div>
+      <h3 class="cc-h">"Hand of God"</h3>
+      <p class="cc-b">Maradona punched the ball in with his hand. No camera caught it clearly. England eliminated. With VAR? Disallowed in 3 seconds flat.</p>
+      <p class="cc-v" style="color:#ff3d2e">→ Technology would have changed history.</p>
+    </div>
+    <div class="cc" style="--a:#00ffe0">
+      <span class="cc-em">🎾</span><div class="cc-yr" style="color:var(--neon)">2007 · Wimbledon</div>
+      <h3 class="cc-h">Hawk-Eye's First TV Moment</h3>
+      <p class="cc-b">Serena challenged a line call live on BBC. Hawk-Eye showed OUT by 2mm. The crowd went silent. A sport changed forever.</p>
+      <p class="cc-v">→ The machine beat the human eye.</p>
+    </div>
+    <div class="cc" style="--a:#ffd000">
+      <span class="cc-em">🏊</span><div class="cc-yr" style="color:var(--gold)">2008 · Beijing Olympics</div>
+      <h3 class="cc-h">The Banned Swimsuit</h3>
+      <p class="cc-b">Speedo's LZR Racer shattered 23 world records in 5 days. Then FINA banned it — calling it "mechanical doping."</p>
+      <p class="cc-v" style="color:var(--gold)">→ Banned. The line still isn't clear.</p>
+    </div>
+    <div class="cc" style="--a:#9b6bff">
+      <span class="cc-em">🏎️</span><div class="cc-yr" style="color:var(--purple)">2019 · Formula One</div>
+      <h3 class="cc-h">Hamilton's Biometric Glove</h3>
+      <p class="cc-b">A glove tracked micro-tremors in Lewis Hamilton's fingers — predicting a grip failure 3 laps before it happened.</p>
+      <p class="cc-v" style="color:var(--purple)">→ Data literally saved a race.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S4 WEARABLES ══ -->
+<section class="slide" id="s4">
+  <div class="s4l">
+    <span class="s4-bg">DATA</span>
+    <svg class="ath-svg" width="280" height="460" viewBox="0 0 280 460" fill="white">
+      <ellipse cx="140" cy="48" rx="28" ry="34"/>
+      <rect x="105" y="80" width="70" height="110" rx="10"/>
+      <rect x="68" y="83" width="32" height="88" rx="10"/>
+      <rect x="180" y="83" width="32" height="88" rx="10"/>
+      <rect x="107" y="188" width="33" height="130" rx="10"/>
+      <rect x="140" y="188" width="33" height="130" rx="10"/>
+    </svg>
+    <p class="seye">Wearable Technology</p>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4.5vw,58px);line-height:1;margin-bottom:1rem">YOUR BODY IS<br>NOW A LIVE FEED.</h2>
+    <p style="font-size:13px;color:rgba(240,236,227,.48);max-width:320px;line-height:1.7;margin-bottom:1.5rem">F1 drivers wear <strong style="color:var(--paper)">80+ sensors</strong> per race. Premier League players tracked across <strong style="color:var(--paper)">200 metrics</strong> per match.</p>
+    <div style="display:flex;gap:2.5rem">
+      <div><div class="bnum">80+</div><div class="blbl">Sensors on an F1 driver</div></div>
+      <div><div class="bnum">500</div><div class="blbl">Data points per second</div></div>
+    </div>
+  </div>
+  <div class="s4r">
+    <div class="hud" style="--hc:#ff3d2e" id="hud1">
+      <div class="hud-top"><span class="hud-ico">❤️</span><div><div class="hud-lbl">Heart Rate</div><div class="hud-val">187 BPM</div></div></div>
+      <div class="bar-t" id="bt1"><div class="bar-f" id="bf1" style="background:#ff3d2e"></div></div>
+    </div>
+    <div class="hud" style="--hc:#00ffe0" id="hud2">
+      <div class="hud-top"><span class="hud-ico">⚡</span><div><div class="hud-lbl">Sprint Speed</div><div class="hud-val">38 km/h</div></div></div>
+      <div class="bar-t" id="bt2"><div class="bar-f" id="bf2"></div></div>
+    </div>
+    <div class="hud" style="--hc:#ffd000" id="hud3">
+      <div class="hud-top"><span class="hud-ico">🧠</span><div><div class="hud-lbl">Fatigue Index</div><div class="hud-val" style="color:#ffd000">HIGH RISK</div></div></div>
+      <div class="bar-t" id="bt3"><div class="bar-f" id="bf3" style="background:#ffd000"></div></div>
+    </div>
+    <div class="f1box">
+      <strong>🏎️ Case Study — F1</strong>
+      Pirelli's tyre sensors send live tread data to the pit wall. Teams predict a blowout before the driver feels anything.
+    </div>
+  </div>
+</section>
+
+<!-- ══ S5 VAR ══ -->
+<section class="slide" id="s5">
+  <div class="var-screen rv">
+    <div class="var-bar">
+      <span>🔴 <span class="blink">LIVE</span> · VAR REVIEW IN PROGRESS</span>
+      <span>90+3' · MATCH 47</span>
+      <span>STADIUM REF OVERRIDE</span>
+    </div>
+    <div class="var-body">
+      <div>
+        <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,236,227,.28);margin-bottom:.6rem">Decision</div>
+        <div class="verdict">NO<br>GOAL</div>
+        <div class="var-det">
+          Offside detected — <strong style="color:var(--paper)">4.7 cm</strong><br>
+          Semi-automated technology confirmed.<br>
+          Confidence: <strong style="color:var(--neon)">99.7%</strong><br><br>
+          <span>Hawk-Eye invented by Dr Paul Hawkins, 2001.<br>Now used in cricket, tennis, football & rugby.</span>
+        </div>
+      </div>
+      <!-- LIVE PITCH DIAGRAM -->
+      <div>
+        <div style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,236,227,.28);margin-bottom:.65rem">Live Pitch Feed — Offside Line Active</div>
+        <div class="pitch" id="pitchDiag">
+          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 400 225" preserveAspectRatio="none">
+            <rect width="400" height="225" fill="#010e04"/>
+            <rect x="0"   width="40"  height="225" fill="rgba(255,255,255,.012)"/>
+            <rect x="80"  width="40"  height="225" fill="rgba(255,255,255,.012)"/>
+            <rect x="160" width="40"  height="225" fill="rgba(255,255,255,.012)"/>
+            <rect x="240" width="40"  height="225" fill="rgba(255,255,255,.012)"/>
+            <rect x="320" width="40"  height="225" fill="rgba(255,255,255,.012)"/>
+            <rect x="0" y="0" width="400" height="225" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1.5"/>
+            <line x1="200" y1="0" x2="200" y2="225" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+            <ellipse cx="200" cy="112" rx="52" ry="38" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+            <rect x="1"   y="74" width="48" height="77" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+            <rect x="351" y="74" width="48" height="77" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+          </svg>
+          <!-- offside line -->
+          <div class="off-line"></div>
+          <!-- ball trajectory -->
+          <div class="var-trail" style="left:40%;top:40%;width:14%;transform:rotate(-6deg)"></div>
+          <!-- players -->
+          <div class="pdot" style="background:#3b82f6;box-shadow:0 0 8px #3b82f6;left:52%;top:42%"></div>
+          <div class="pdot" style="background:var(--fire);box-shadow:0 0 12px var(--fire);left:64%;top:46%;animation:blink .7s infinite"></div>
+          <div class="pdot" style="background:#3b82f6;box-shadow:0 0 8px #3b82f6;left:46%;top:55%"></div>
+          <div class="pdot" style="background:#3b82f6;box-shadow:0 0 8px #3b82f6;left:72%;top:60%"></div>
+          <div class="pdot" style="background:#22c55e;box-shadow:0 0 8px #22c55e;left:76%;top:50%"></div>
+          <!-- ball -->
+          <div class="ball-dot" style="left:56%;top:38%"></div>
+          <!-- offside label -->
+          <div class="off-label" style="top:8%;left:62%">OFFSIDE +4.7cm</div>
+        </div>
+        <div style="margin-top:.65rem;font-size:10.5px;color:rgba(240,236,227,.28);letter-spacing:.05em">🔴 Offside · 🔵 Onside · 🟢 Goalkeeper · ⚪ Ball</div>
+      </div>
+    </div>
+    <div class="var-footer">System: Hawk-Eye v9.2 · Processing: 0.003s · 10 cameras at 340fps</div>
+  </div>
+  <p class="sq rv rv-d2">"Wimbledon 2007. Serena challenges. The machine says OUT by 2mm. The crowd doesn't breathe."</p>
+</section>
+
+<!-- ══ S6 CULTURE ══ -->
+<section class="slide" id="s6">
+  <p class="seye rv">Culture & Cinema</p>
+  <h2 class="stitle rv rv-d1" style="margin-bottom:2rem">SPORT MEETS<br>SCIENCE FICTION</h2>
+  <div class="three-col rv rv-d2">
+    <div class="sc"><span class="sc-num">01</span><div class="sc-ico">🎬</div><div class="sc-tag" style="color:var(--neon)">Movie Theory</div><h3 class="sc-h">Moneyball (2011)</h3><p class="sc-b">Brad Pitt's Oakland A's used algorithms to out-compete richer clubs. A real story. The theory? Data beats instinct. Now every club on Earth runs on it.</p></div>
+    <div class="sc"><span class="sc-num">02</span><div class="sc-ico">🕷️</div><div class="sc-tag" style="color:var(--gold)">Origin Story</div><h3 class="sc-h">Spidercam Was Built for Spider-Man</h3><p class="sc-b">The wire-mounted flying camera above every Premier League pitch was originally designed for Spider-Man film sets. Hollywood tech became sports broadcast standard.</p></div>
+    <div class="sc"><span class="sc-num">03</span><div class="sc-ico">👟</div><div class="sc-tag" style="color:var(--fire)">Ethical Debate</div><h3 class="sc-h">Nike's "Illegal" Shoe</h3><p class="sc-b">The Vaporfly gives a proven 4% speed boost via a carbon fibre plate. World Athletics allowed it — then banned "super spikes" mid-season. The line keeps moving.</p></div>
+  </div>
+</section>
+
+<!-- ══ S7 VR ══ -->
+<section class="slide" id="s7">
+  <div class="s7l">
+    <p class="seye">Virtual Reality Training</p>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,4.8vw,60px);line-height:1;margin-bottom:1.2rem">TRAIN ANYWHERE.<br>FEAR NOTHING.</h2>
+    <p style="font-size:13px;color:rgba(240,236,227,.48);max-width:360px;line-height:1.75;margin-bottom:1.6rem">NFL teams run <strong style="color:var(--paper)">1,000 simulated plays a night.</strong> Steph Curry perfects his shot in VR. Man City players replay full matches inside a headset.</p>
+    <div class="vr-stat-row">
+      <div><div class="vs-n">40%</div><div class="vs-l">Faster decisions</div></div>
+      <div><div class="vs-n">0</div><div class="vs-l">Physical risk</div></div>
+      <div><div class="vs-n">∞</div><div class="vs-l">Reps possible</div></div>
+    </div>
+    <div style="margin-top:2rem;border:1px solid rgba(155,107,255,.28);background:rgba(155,107,255,.05);border-radius:6px;padding:.9rem 1.1rem;max-width:360px">
+      <strong style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);display:block;margin-bottom:.35rem">🎬 The Matrix Theory</strong>
+      <p style="font-size:12.5px;color:rgba(240,236,227,.52);line-height:1.7">"What if you could train 10,000 hours in a day?" Athletes today are entering simulated realities — not science fiction. Just sport.</p>
+    </div>
+  </div>
+  <!-- Immersive VR environment -->
+  <div class="s7r">
+    <div class="vr-env"></div>
+    <div class="scan-line"></div>
+    <!-- perspective grid floor -->
+    <div class="grid-floor">
+      <div class="grid-inner" id="vrGrid"></div>
+    </div>
+    <!-- VR Helmet SVG -->
+    <div class="helmet-wrap" id="helmetWrap">
+      <svg width="270" height="185" viewBox="0 0 270 185" fill="none">
+        <rect x="22" y="52" width="226" height="114" rx="32" fill="#160038" stroke="#7b3bff" stroke-width="2"/>
+        <rect x="38" y="68" width="194" height="78" rx="24" fill="#0c001f" stroke="#9b6bff" stroke-width="1.5"/>
+        <ellipse cx="88" cy="107" rx="36" ry="28" fill="#06001a" stroke="#8b4bef" stroke-width="1.5"/>
+        <ellipse cx="88" cy="107" rx="26" ry="19" fill="none" stroke="#9b6bff" stroke-width="1" opacity=".5"/>
+        <ellipse cx="88" cy="107" rx="18" ry="13" fill="rgba(155,107,255,.2)">
+          <animate attributeName="rx" values="18;22;18" dur="2s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="182" cy="107" rx="36" ry="28" fill="#06001a" stroke="#8b4bef" stroke-width="1.5"/>
+        <ellipse cx="182" cy="107" rx="26" ry="19" fill="none" stroke="#9b6bff" stroke-width="1" opacity=".5"/>
+        <ellipse cx="182" cy="107" rx="18" ry="13" fill="rgba(0,200,255,.18)">
+          <animate attributeName="rx" values="18;23;18" dur="2.6s" repeatCount="indefinite"/>
+        </ellipse>
+        <rect x="116" y="100" width="38" height="14" rx="7" fill="#1e0045" stroke="#6b3baf" stroke-width="1"/>
+        <rect x="2"   y="88" width="22" height="32" rx="9" fill="#100028" stroke="#4b2baf" stroke-width="1"/>
+        <rect x="246" y="88" width="22" height="32" rx="9" fill="#100028" stroke="#4b2baf" stroke-width="1"/>
+        <rect x="62" y="54" width="146" height="4" rx="2" fill="rgba(155,107,255,.65)"/>
+        <!-- scan inside visor -->
+        <rect x="39" y="95" width="192" height="2" fill="rgba(155,107,255,.35)">
+          <animateTransform attributeName="transform" type="translate" from="0,0" to="0,42" dur="1.6s" repeatCount="indefinite"/>
+        </rect>
+        <!-- glint -->
+        <ellipse cx="75" cy="95" rx="8" ry="4" fill="rgba(255,255,255,.12)"/>
+        <ellipse cx="169" cy="95" rx="8" ry="4" fill="rgba(255,255,255,.1)"/>
+      </svg>
+    </div>
+    <!-- floating HUD labels -->
+    <div class="vr-lbl" style="top:16%;left:6%;color:var(--neon);animation:float 4.2s 1s ease-in-out infinite">
+      🏃 Scenario: Penalty Kick
+      <span>Rep 47 / 100 · Difficulty: PRO</span>
+    </div>
+    <div class="vr-lbl" style="bottom:26%;right:5%;color:var(--purple);animation:float 5.1s .4s ease-in-out infinite">
+      🧠 Neural Load: 78%
+      <span>Focus Mode Active</span>
+    </div>
+    <div class="vr-lbl" style="top:44%;right:6%;color:var(--gold);animation:float 3.8s .8s ease-in-out infinite">
+      📍 GPS: Pitch Position
+      <span>Accuracy: ±2cm</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S8 GOOD/BAD ══ -->
+<section class="slide" id="s8">
+  <h2 class="stitle rv" style="margin-bottom:2rem">CHANGED THE GAME.<br><span style="color:rgba(240,236,227,.22);font-size:.58em;font-family:'DM Serif Display',serif;font-style:italic">But at what cost?</span></h2>
+  <div class="vs-split rv rv-d1">
+    <div class="vc">
+      <div class="vh" style="background:rgba(0,255,224,.04)"><span style="font-size:1.2rem">✅</span><span class="vct" style="color:var(--neon)">The Wins</span></div>
+      <div class="vrow"><div class="vrt" style="color:var(--neon)">Fairer Decisions</div><div class="vrb">VAR & Hawk-Eye eliminate match-changing errors. The ref's ego is no longer the final word.</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--neon)">Athlete Safety</div><div class="vrb">Sensors detect overload before the body breaks. Careers last longer.</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--neon)">Global Access</div><div class="vrb">5 billion people watched the 2022 World Cup — drones, 4K, AR overlays brought sport to everyone.</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--neon)">Human Limits</div><div class="vrb">Athletes train smarter. VR. AI coaching. The ceiling keeps rising.</div></div>
+    </div>
+    <div class="vc">
+      <div class="vh" style="background:rgba(255,61,46,.04)"><span style="font-size:1.2rem">❌</span><span class="vct" style="color:var(--fire)">The Cost</span></div>
+      <div class="vrow"><div class="vrt" style="color:var(--fire)">VAR Kills the Moment</div><div class="vrb">You score. You celebrate. Then you wait 4 minutes. Joy delayed is joy destroyed.</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--fire)">Rich vs Poor</div><div class="vrb">Man City's AI scouting vs a League One spreadsheet. Tech widens the gap it was meant to close.</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--fire)">Tech Doping</div><div class="vrb">LZR suits. Vaporfly shoes. Carbon plates. Where does equipment end and cheating begin?</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--fire)">Players Become Numbers</div><div class="vrb">Coaches trust the algorithm over their eyes. The human game slowly disappears.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S9 FUTURE ══ -->
+<section class="slide" id="s9">
+  <p class="seye rv">Sports in 2050</p>
+  <h2 class="stitle rv rv-d1" style="margin-bottom:2rem">WHAT COMES NEXT</h2>
+  <div class="fut-grid rv rv-d2">
+    <div class="fc" data-y="2030"><div class="fc-i">🤖</div><div class="fc-t" style="color:var(--neon)">Robotic Referees</div><p class="fc-b">100% accurate. Zero emotion. No arguments. But would you miss the outrage?</p></div>
+    <div class="fc" data-y="2035"><div class="fc-i">🧠</div><div class="fc-t" style="color:var(--purple)">Neural Coaching</div><p class="fc-b">Brain-computer interfaces whisper tactics to athletes mid-play. No earpiece needed.</p></div>
+    <div class="fc" data-y="2040"><div class="fc-i">🦾</div><div class="fc-t" style="color:var(--gold)">Exoskeleton Sport</div><p class="fc-b">Powered suits as a regulated category. Like motorsport — but for the human body.</p></div>
+    <div class="fc" data-y="2050"><div class="fc-i">🌌</div><div class="fc-t" style="color:var(--fire)">Zero-Gravity Arenas</div><p class="fc-b">NASA already has a zero-G basketball court designed for the ISS. This isn't science fiction.</p></div>
+  </div>
+</section>
+
+<!-- ══ S10 END ══ -->
+<section class="slide" id="s10">
+  <div class="end-glow"></div>
+  <p class="seye rv" style="text-align:center">The Verdict</p>
+  <p class="final rv rv-d1">Technology won't replace<br>the <span>MAGIC</span> of sport.</p>
+  <p class="fsub rv rv-d2">It will make it more fair, more exciting, and more human than ever before.<br>The ball still needs to cross the line.</p>
+  <div class="pills rv rv-d3">
+    <span class="pill">Fairer</span><span class="pill">Faster</span><span class="pill">Safer</span><span class="pill">Smarter</span><span class="pill">More Human</span>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ── CURSOR + TRAIL ──────────────────────────────────────────────────────── */
+const cur=document.getElementById('cur'), trail=document.getElementById('cur-trail');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+setInterval(()=>{tx+=(mx-tx)*.14;ty+=(my-ty)*.14;trail.style.left=tx+'px';trail.style.top=ty+'px';},16);
+document.querySelectorAll('.cc,.pill,.fc,.ba,.vrow,.sc,.hud,.ba-wrap').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+
+/* ── PARALLAX ────────────────────────────────────────────────────────────── */
+document.addEventListener('mousemove',e=>{
+  const px=(e.clientX/window.innerWidth-.5)*22, py=(e.clientY/window.innerHeight-.5)*14;
+  const s1c=document.querySelector('.s1c');
+  if(s1c) s1c.style.transform=`translate(${px*.25}px,${py*.18}px)`;
+  const helm=document.getElementById('helmetWrap');
+  if(helm) helm.style.transform=`translate(${px*.4}px,${py*.3}px)`;
+});
+
+/* ── NAV DOTS ────────────────────────────────────────────────────────────── */
+const slides=document.querySelectorAll('.slide');
+const navEl=document.getElementById('nav');
+slides.forEach((_,i)=>{
+  const d=document.createElement('div');d.className='nd'+(i===0?' on':'');
+  d.addEventListener('click',()=>{playS('click');slides[i].scrollIntoView({behavior:'smooth'});});
+  navEl.appendChild(d);
+});
+const ndots=navEl.querySelectorAll('.nd');
+new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const i=[...slides].indexOf(e.target);
+      ndots.forEach((d,j)=>d.classList.toggle('on',i===j));
+      if(i>0)playS('whoosh');
+    }
+  });
+},{threshold:.5}).observe&&slides.forEach(s=>new IntersectionObserver(es=>{
+  if(es[0].isIntersecting){const i=[...slides].indexOf(s);ndots.forEach((d,j)=>d.classList.toggle('on',i===j));if(i>0)playS('whoosh');}
+},{threshold:.5}).observe(s));
+
+/* ── SCROLL REVEAL ───────────────────────────────────────────────────────── */
+new IntersectionObserver(es=>{
+  es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('in'),i*65);});
+},{threshold:.1}).observe&&
+document.querySelectorAll('.rv').forEach(el=>new IntersectionObserver(e=>{if(e[0].isIntersecting)e[0].target.classList.add('in');},{threshold:.1}).observe(el));
+
+/* ── SOUND ───────────────────────────────────────────────────────────────── */
+let soundOn=false;
+document.getElementById('soundbtn').addEventListener('click',function(){
+  soundOn=!soundOn;this.textContent=soundOn?'🔊':'🔇';
+});
+function playS(type){
+  if(!soundOn)return;
+  const ctx=new(window.AudioContext||window.webkitAudioContext)();
+  const o=ctx.createOscillator(),g=ctx.createGain();
+  o.connect(g);g.connect(ctx.destination);
+  if(type==='whoosh'){o.type='sine';o.frequency.setValueAtTime(800,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(200,ctx.currentTime+.25);g.gain.setValueAtTime(.08,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.25);}
+  else if(type==='click'){o.type='square';o.frequency.setValueAtTime(1200,ctx.currentTime);g.gain.setValueAtTime(.05,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.08);}
+  else if(type==='beep'){o.type='sine';o.frequency.setValueAtTime(660,ctx.currentTime);g.gain.setValueAtTime(.04,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.12);}
+  o.start();o.stop(ctx.currentTime+.3);
+}
+
+/* ── BEFORE/AFTER SLIDER ─────────────────────────────────────────────────── */
+{
+  const wrap=document.getElementById('baWrap');
+  const after=document.getElementById('baAfter');
+  const div=document.getElementById('baDivider');
+  let drag=false;
+  function setBA(x){
+    const r=wrap.getBoundingClientRect();
+    const p=Math.max(4,Math.min(96,(x-r.left)/r.width*100));
+    after.style.clipPath=`inset(0 0 0 ${p}%)`;
+    div.style.left=p+'%';
+  }
+  wrap.addEventListener('mousedown',e=>{drag=true;setBA(e.clientX);playS('click');e.preventDefault();});
+  wrap.addEventListener('touchstart',e=>{drag=true;setBA(e.touches[0].clientX);},{passive:true});
+  document.addEventListener('mousemove',e=>{if(drag)setBA(e.clientX);});
+  document.addEventListener('touchmove',e=>{if(drag)setBA(e.touches[0].clientX);},{passive:true});
+  document.addEventListener('mouseup',()=>drag=false);
+  document.addEventListener('touchend',()=>drag=false);
+  // auto-animate on enter
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){
+      let st=null;
+      (function a(ts){if(!st)st=ts;const p=Math.min((ts-st)/1000,1);const e2=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;const pct=12+e2*38;after.style.clipPath=`inset(0 0 0 ${pct}%)`;div.style.left=pct+'%';if(p<1)requestAnimationFrame(a);})(performance.now());
+    }
+  },{threshold:.35}).observe(wrap);
+}
+
+/* ── OLD CROWD DOTS ──────────────────────────────────────────────────────── */
+{
+  const c=document.getElementById('oldCrowd');
+  if(c)for(let i=0;i<320;i++){const d=document.createElement('div');d.className='cr';d.style.background=['#181818','#202020','#252525','#151515'][Math.floor(Math.random()*4)];c.appendChild(d);}
+}
+
+/* ── HUD BARS — ANIMATE + DRAG ───────────────────────────────────────────── */
+{
+  const bars=[{f:'bf1',w:85},{f:'bf2',w:74},{f:'bf3',w:92}];
+  new IntersectionObserver(es=>{
+    if(es[0].isIntersecting){
+      bars.forEach((b,i)=>setTimeout(()=>{const el=document.getElementById(b.f);if(el){el.style.width=b.w+'%';playS('beep');}},i*250));
+    }
+  },{threshold:.3}).observe(document.getElementById('s4'));
+  // draggable bars
+  document.querySelectorAll('.bar-t').forEach(track=>{
+    let dr=false;
+    function set(x){const r=track.getBoundingClientRect();const p=Math.max(2,Math.min(100,(x-r.left)/r.width*100));const f=track.querySelector('.bar-f');if(f)f.style.width=p+'%';playS('beep');}
+    track.addEventListener('mousedown',e=>{dr=true;set(e.clientX);e.preventDefault();});
+    track.addEventListener('touchstart',e=>{dr=true;set(e.touches[0].clientX);},{passive:true});
+    document.addEventListener('mousemove',e=>{if(dr)set(e.clientX);});
+    document.addEventListener('touchmove',e=>{if(dr)set(e.touches[0].clientX);},{passive:true});
+    document.addEventListener('mouseup',()=>dr=false);
+    document.addEventListener('touchend',()=>dr=false);
+  });
+}
+
+/* ── VR GRID LINES ───────────────────────────────────────────────────────── */
+{
+  const g=document.getElementById('vrGrid');
+  if(g){
+    g.style.cssText='position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(155,107,255,.12) 0,rgba(155,107,255,.12) 1px,transparent 1px,transparent 60px),repeating-linear-gradient(90deg,rgba(155,107,255,.08) 0,rgba(155,107,255,.08) 1px,transparent 1px,transparent 60px);animation:gridScroll 2s linear infinite';
+  }
+}
+
+/* ── THREE.JS TITLE — SPORTS THEMED ─────────────────────────────────────── */
+{
+  const canvas=document.getElementById('c3d');
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  const scene=new THREE.Scene(), cam=new THREE.PerspectiveCamera(55,window.innerWidth/window.innerHeight,.1,200);
+  cam.position.set(0,0,7);
+
+  // Football (sphere + icosahedron wireframe for pentagon feel)
+  const ballGeo=new THREE.SphereGeometry(1.15,32,32);
+  const ballMat=new THREE.MeshPhongMaterial({color:0xffffff,shininess:90,specular:0x333333});
+  const ball=new THREE.Mesh(ballGeo,ballMat);
+  ball.position.set(3.6,.4,-1);
+  scene.add(ball);
+  const wfGeo=new THREE.IcosahedronGeometry(1.17,1);
+  const wfMat=new THREE.MeshBasicMaterial({color:0x111111,wireframe:true,transparent:true,opacity:.55});
+  const wf=new THREE.Mesh(wfGeo,wfMat);
+  wf.position.copy(ball.position);
+  scene.add(wf);
+
+  // Stadium oval torus
+  const stadMesh=new THREE.Mesh(
+    new THREE.TorusGeometry(2.6,.055,8,80),
+    new THREE.MeshBasicMaterial({color:0x00ffe0,transparent:true,opacity:.1})
+  );
+  stadMesh.position.set(3.2,.3,-2); stadMesh.rotation.x=Math.PI*.32;
+  scene.add(stadMesh);
+
+  // Ball trajectory arc
+  const pts=[];
+  for(let i=0;i<=50;i++){const t=i/50;pts.push(new THREE.Vector3(-6+t*12,Math.sin(t*Math.PI)*2.8,-3+t*1.5));}
+  scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xffd000,transparent:true,opacity:.3})));
+
+  // Particles
+  const pGeo=new THREE.BufferGeometry(), pArr=new Float32Array(1400*3);
+  for(let i=0;i<1400*3;i++) pArr[i]=(Math.random()-.5)*18;
+  pGeo.setAttribute('position',new THREE.BufferAttribute(pArr,3));
+  scene.add(new THREE.Points(pGeo,new THREE.PointsMaterial({color:0x00ffe0,size:.04,transparent:true,opacity:.35})));
+
+  // Light cones (stadium floodlights)
+  const coneMat=new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.04,side:THREE.DoubleSide});
+  [-4,-2,0,2,4].forEach(x=>{const c=new THREE.Mesh(new THREE.CylinderGeometry(.02,1.4,4,5,1,true),coneMat.clone());c.position.set(x,4.5,-5);scene.add(c);});
+
+  scene.add(new THREE.AmbientLight(0xffffff,.55));
+  const pl=new THREE.PointLight(0x00ffe0,1.4,22); pl.position.set(2,3,4); scene.add(pl);
+  const pl2=new THREE.PointLight(0xffd000,.7,15); pl2.position.set(-3,-1,3); scene.add(pl2);
+
+  let mouse={x:0,y:0};
+  document.addEventListener('mousemove',e=>{mouse.x=(e.clientX/window.innerWidth-.5)*2;mouse.y=-(e.clientY/window.innerHeight-.5)*2;});
+  window.addEventListener('resize',()=>{cam.aspect=window.innerWidth/window.innerHeight;cam.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
+
+  (function anim(){
+    requestAnimationFrame(anim);
+    const t=Date.now()*.001;
+    ball.rotation.y=t*.7; ball.rotation.x=t*.28; wf.rotation.copy(ball.rotation);
+    stadMesh.rotation.z=t*.04;
+    cam.position.x+=(mouse.x*.38-cam.position.x)*.04;
+    cam.position.y+=(mouse.y*.22-cam.position.y)*.04;
+    cam.lookAt(scene.position);
+    renderer.render(scene,cam);
+  })();
+}
+</script>
+</body>
+</html>
