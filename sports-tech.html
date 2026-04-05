@@ -208,6 +208,24 @@ body{font-family:'Syne',sans-serif;background:var(--ink);color:var(--paper);over
 @keyframes flick{0%,100%{opacity:.25}50%{opacity:.55}}
 @keyframes scan{from{top:-4px}to{top:100%}}
 @keyframes gridScroll{from{background-position-y:0}to{background-position-y:60px}}
+/* ── NEW SLIDES CSS ── */
+.spk-tag{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:rgba(255,255,255,.05);display:inline-block;padding:.5rem 1rem;border-radius:2px;margin-bottom:2rem}
+.spk-title{font-size:clamp(40px,5vw,72px);font-weight:800;line-height:1.1;margin-bottom:1.5rem}
+.spk-desc{font-size:clamp(14px,1.2vw,16px);color:rgba(240,236,227,.7);line-height:1.6;max-width:640px;margin-bottom:2.5rem}
+.spk-quote{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(16px,1.8vw,22px);margin-top:3rem;font-weight:700}
+.spk-box{background:rgba(255,255,255,.04);padding:2rem;border-radius:2px;position:relative}
+.spk-box-t{border-top:3px solid var(--bdc)}
+.spk-box-f{display:flex;align-items:center;gap:1.5rem;border:1px solid var(--bdc)}
+.spk-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,7vw,96px);line-height:1;color:var(--bdc)}
+.spk-row{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;padding:5vw;max-width:1400px;margin:0 auto}
+.spk-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.spk-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
+.spk-circle{width:46px;height:46px;border-radius:50%;background:var(--bdc);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.spk-list ul{list-style:none;padding-left:1.5rem}
+.spk-list li{position:relative;margin-bottom:.8rem;font-size:14px;color:rgba(240,236,227,.75)}
+.spk-list li::before{content:'•';position:absolute;left:-1.2rem;color:rgba(240,236,227,.5)}
+.ty-names{display:flex;gap:1rem;justify-content:center;margin-top:4rem;flex-wrap:wrap}
+.ty-name{background:rgba(255,255,255,.04);padding:1rem 2rem;font-size:11px;font-weight:700;letter-spacing:.05em}
 </style>
 </head>
 <body>
@@ -551,6 +569,162 @@ body{font-family:'Syne',sans-serif;background:var(--ink);color:var(--paper);over
   <p class="fsub rv rv-d2">It will make it more fair, more exciting, and more human than ever before.<br>The ball still needs to cross the line.</p>
   <div class="pills rv rv-d3">
     <span class="pill">Fairer</span><span class="pill">Faster</span><span class="pill">Safer</span><span class="pill">Smarter</span><span class="pill">More Human</span>
+  </div>
+</section>
+
+<!-- ══ S11 SPEAKER 2 ══ -->
+<section class="slide" id="s11">
+  <div class="spk-row rv">
+    <div>
+      <div class="spk-tag" style="color:var(--neon)">PRIYA GANDHI - SPEAKER 2</div>
+      <h2 class="spk-title rv rv-d1">Unlocking the<br>Athletes</h2>
+      <p class="spk-desc rv rv-d2">Coaches used to rely on gut instinct. Now they rely on data. The results speak for themselves.</p>
+      
+      <div class="spk-box spk-box-f rv rv-d3" style="--bdc:var(--neon);padding:1.5rem 2rem;background:transparent">
+        <div class="spk-num">30<br><span style="font-size:.8em">%</span></div>
+        <div style="font-size:15px;line-height:1.5;max-width:300px;font-weight:600">Reduction in soft-tissue injuries in elite football squads using GPS tracking vests</div>
+      </div>
+      
+      <p class="spk-quote rv rv-d3" style="color:var(--gold)">The data doesn't replace talent. It unlocks it.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1.5rem" class="rv rv-d2">
+      <div class="spk-box spk-box-t" style="--bdc:var(--gold)">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+          <div class="spk-circle">GPS</div><h3 style="font-size:20px;font-weight:700">GPS Tracking Vests</h3>
+        </div>
+        <p style="font-size:14px;color:rgba(240,236,227,.7);line-height:1.6">Record distance, acceleration, heart rate and tackle impact in real time. Coaches pull players before injury occurs.</p>
+      </div>
+      <div class="spk-box spk-box-t" style="--bdc:var(--purple)">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+          <div class="spk-circle">CAM</div><h3 style="font-size:20px;font-weight:700">Motion-Capture Tech</h3>
+        </div>
+        <p style="font-size:14px;color:rgba(240,236,227,.7);line-height:1.6">High-speed cameras detect a 2° arm misalignment or a 0.05s hand-entry loss per stroke — the margin between gold and 4th.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S12 SPEAKER 3 ══ -->
+<section class="slide" id="s12">
+  <div class="spk-row rv">
+    <div>
+      <div class="spk-tag" style="color:var(--gold)">SAHIL CHAUDHARI - SPEAKER 3</div>
+      <h2 class="spk-title rv rv-d1">Technology &<br>The Fan</h2>
+      <p class="spk-desc rv rv-d2">Sport is also entertainment. Technology has turned watching sport into something almost cinematic.</p>
+      
+      <div class="spk-grid-2 rv rv-d3">
+        <div class="spk-box" style="--bdc:var(--gold);border:1px solid var(--gold);background:transparent;text-align:center">
+          <div class="spk-num" style="margin-bottom:1rem;font-size:clamp(48px,5vw,72px)">800M+</div>
+          <p style="font-size:12px;color:rgba(240,236,227,.7)">People watched the 2022 World Cup Final globally</p>
+        </div>
+        <div class="spk-box" style="--bdc:var(--purple);border:1px solid var(--purple);background:transparent;text-align:center">
+          <div class="spk-num" style="margin-bottom:1rem;font-size:clamp(48px,5vw,72px)">$12.4B</div>
+          <p style="font-size:12px;color:rgba(240,236,227,.7)">Annual TV rights value of the NFL alone</p>
+        </div>
+      </div>
+    </div>
+    
+    <div style="display:flex;flex-direction:column;justify-content:center;gap:3rem;padding-left:2vw" class="rv rv-d2">
+      <div style="display:flex;align-items:center;gap:1.5rem">
+        <div class="spk-circle" style="background:var(--gold);color:var(--ink)">CAM</div>
+        <p style="font-size:15px;color:var(--paper);max-width:300px;font-weight:600">Ultra-slow motion at 1,000 fps reveals impacts invisible to stadium crowds</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:1.5rem">
+        <div class="spk-circle" style="background:var(--gold);color:var(--ink)">APP</div>
+        <p style="font-size:15px;color:var(--paper);max-width:300px;font-weight:600">Streaming apps let fans check live stats, switch angles, replay instantly</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:1.5rem">
+        <div class="spk-circle" style="background:var(--gold);color:var(--ink)">$$</div>
+        <p style="font-size:15px;color:var(--paper);max-width:300px;font-weight:600">More viewers &rarr; more sponsors &rarr; more money back into sport worldwide</p>
+      </div>
+      <p class="spk-quote rv rv-d3" style="color:var(--gold);text-align:center;margin-top:1rem">Technology didn't just change how we watch sport.<br>It changed who sport belongs to.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S13 SPEAKER 4 ══ -->
+<section class="slide" id="s13" style="align-items:center;display:flex">
+  <div style="padding:5vw;width:100%;max-width:1400px;margin:0 auto">
+    <div class="spk-tag rv" style="color:var(--purple)">KABIR GOSWAMI - SPEAKER 4</div>
+    <h2 class="spk-title rv rv-d1">When Tech<br>Kills the Thrill</h2>
+    <p class="spk-desc rv rv-d2">Sport is emotion, chaos, the moment you don't know what happens next. What are we losing?</p>
+    
+    <div class="spk-grid-3 rv rv-d3" style="margin-top:3rem">
+      <div class="spk-box spk-box-t" style="--bdc:var(--purple)">
+        <h3 style="color:var(--purple);font-size:22px;font-weight:700;margin-bottom:2rem">VAR Delay</h3>
+        <p style="font-size:14px;color:rgba(240,236,227,.7);line-height:1.7">Players half-celebrate, look to the screen, wait 2 minutes for a toe-offside check. The goal becomes a question mark.</p>
+      </div>
+      <div class="spk-box spk-box-t" style="--bdc:var(--gold)">
+        <h3 style="color:var(--gold);font-size:22px;font-weight:700;margin-bottom:2rem">MLB Shift Ban</h3>
+        <p style="font-size:14px;color:rgba(240,236,227,.7);line-height:1.7">Every team used data to run identical defensive shifts — so efficient, so boring. MLB banned it in 2023 to restore creativity.</p>
+      </div>
+      <div class="spk-box spk-box-t" style="--bdc:var(--neon)">
+        <h3 style="color:var(--neon);font-size:22px;font-weight:700;margin-bottom:2rem">NBA Analytics</h3>
+        <p style="font-size:14px;color:rgba(240,236,227,.7);line-height:1.7">Analytics proved the three-pointer reigns supreme. Now every team takes the same shots. The improvised fadeaway? Calculated away.</p>
+      </div>
+    </div>
+    
+    <p class="spk-quote rv rv-d3" style="color:var(--purple);margin-top:2.5rem">Data, by definition, tries to eliminate the unexpected. The magic of sport has always lived in the unexpected.</p>
+  </div>
+</section>
+
+<!-- ══ S14 SPEAKER 5 ══ -->
+<section class="slide" id="s14" style="align-items:center;display:flex">
+  <div style="padding:5vw;width:100%;max-width:1400px;margin:0 auto">
+    <div class="spk-tag rv" style="color:var(--neon)">ILLA YASWANTH - SPEAKER 5</div>
+    <h2 class="spk-title rv rv-d1">Finding the<br>Balance</h2>
+    <p class="spk-desc rv rv-d2" style="max-width:700px">The question is not whether we use technology. That ship has sailed.<br>The question is: are we using it as a tool — or letting it become the master?</p>
+    
+    <div class="spk-grid-2 rv rv-d3" style="margin-top:3rem;gap:2rem">
+      <div class="spk-box-t" style="--bdc:var(--neon);padding-top:1.5rem">
+        <h3 style="color:var(--neon);font-size:22px;font-weight:700;margin-bottom:2rem">Technology SHOULD</h3>
+        <div class="spk-list">
+          <ul>
+            <li>Sharpen officiating decisions</li>
+            <li>Keep athletes safer from injury</li>
+            <li>Bring sport to global audiences</li>
+            <li>Set boundaries on unfair advantages</li>
+          </ul>
+        </div>
+      </div>
+      <div class="spk-box-t" style="--bdc:var(--purple);padding-top:1.5rem">
+        <h3 style="color:var(--purple);font-size:22px;font-weight:700;margin-bottom:2rem">Technology SHOULD NOT</h3>
+        <div class="spk-list">
+          <ul>
+            <li>Replace human instinct and creativity</li>
+            <li>Eliminate the unpredictable moments</li>
+            <li>Reduce players to spreadsheet executors</li>
+            <li>Define what counts as human achievement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <p class="spk-quote rv rv-d3" style="color:var(--gold);text-align:center;margin-top:4rem">We don't watch sport to see perfect execution. We watch because we don't know what happens next.</p>
+  </div>
+</section>
+
+<!-- ══ S15 END THANK YOU ══ -->
+<section class="slide" id="s15" style="align-items:center;display:flex;justify-content:center;text-align:center;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-20%;left:-10%;width:800px;height:800px;background:#17112b;border-radius:50%;z-index:-1;filter:blur(100px);opacity:0.4"></div>
+  <div style="position:absolute;bottom:-30%;right:-10%;width:900px;height:900px;background:#0d2325;border-radius:50%;z-index:-1;filter:blur(100px);opacity:0.4"></div>
+  
+  <div style="padding:5vw;width:100%;max-width:1200px;margin:0 auto">
+    <h1 style="font-size:clamp(80px,12vw,160px);font-weight:800;line-height:1;margin-bottom:3rem" class="rv rv-d1">Thank You</h1>
+    
+    <div style="height:4px;width:100%;max-width:700px;background:var(--gold);margin:0 auto;margin-bottom:3rem" class="rv rv-d2"></div>
+    
+    <p style="font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(22px,3vw,32px);color:var(--paper);line-height:1.5" class="rv rv-d3">
+      Use technology as a tool.<br>Never let it become the story.
+    </p>
+    
+    <div class="ty-names rv rv-d3">
+      <div class="ty-name" style="color:#d4b3ff">Nandini Goyal</div>
+      <div class="ty-name" style="color:var(--neon)">Priya Gandhi</div>
+      <div class="ty-name" style="color:var(--gold)">Sahil Chaudhari</div>
+      <div class="ty-name" style="color:#e0e0e0">Kabir Goswami</div>
+      <div class="ty-name" style="color:#b38cff">Illa Yaswanth</div>
+    </div>
   </div>
 </section>
 
