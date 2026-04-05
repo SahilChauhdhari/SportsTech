@@ -449,129 +449,6 @@ body{font-family:'Syne',sans-serif;background:var(--ink);color:var(--paper);over
   <p class="sq rv rv-d2">"Wimbledon 2007. Serena challenges. The machine says OUT by 2mm. The crowd doesn't breathe."</p>
 </section>
 
-<!-- ══ S6 CULTURE ══ -->
-<section class="slide" id="s6">
-  <p class="seye rv">Culture & Cinema</p>
-  <h2 class="stitle rv rv-d1" style="margin-bottom:2rem">SPORT MEETS<br>SCIENCE FICTION</h2>
-  <div class="three-col rv rv-d2">
-    <div class="sc"><span class="sc-num">01</span><div class="sc-ico">🎬</div><div class="sc-tag" style="color:var(--neon)">Movie Theory</div><h3 class="sc-h">Moneyball (2011)</h3><p class="sc-b">Brad Pitt's Oakland A's used algorithms to out-compete richer clubs. A real story. The theory? Data beats instinct. Now every club on Earth runs on it.</p></div>
-    <div class="sc"><span class="sc-num">02</span><div class="sc-ico">🕷️</div><div class="sc-tag" style="color:var(--gold)">Origin Story</div><h3 class="sc-h">Spidercam Was Built for Spider-Man</h3><p class="sc-b">The wire-mounted flying camera above every Premier League pitch was originally designed for Spider-Man film sets. Hollywood tech became sports broadcast standard.</p></div>
-    <div class="sc"><span class="sc-num">03</span><div class="sc-ico">👟</div><div class="sc-tag" style="color:var(--fire)">Ethical Debate</div><h3 class="sc-h">Nike's "Illegal" Shoe</h3><p class="sc-b">The Vaporfly gives a proven 4% speed boost via a carbon fibre plate. World Athletics allowed it — then banned "super spikes" mid-season. The line keeps moving.</p></div>
-  </div>
-</section>
-
-<!-- ══ S7 VR ══ -->
-<section class="slide" id="s7">
-  <div class="s7l">
-    <p class="seye">Virtual Reality Training</p>
-    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,4.8vw,60px);line-height:1;margin-bottom:1.2rem">TRAIN ANYWHERE.<br>FEAR NOTHING.</h2>
-    <p style="font-size:13px;color:rgba(240,236,227,.48);max-width:360px;line-height:1.75;margin-bottom:1.6rem">NFL teams run <strong style="color:var(--paper)">1,000 simulated plays a night.</strong> Steph Curry perfects his shot in VR. Man City players replay full matches inside a headset.</p>
-    <div class="vr-stat-row">
-      <div><div class="vs-n">40%</div><div class="vs-l">Faster decisions</div></div>
-      <div><div class="vs-n">0</div><div class="vs-l">Physical risk</div></div>
-      <div><div class="vs-n">∞</div><div class="vs-l">Reps possible</div></div>
-    </div>
-    <div style="margin-top:2rem;border:1px solid rgba(155,107,255,.28);background:rgba(155,107,255,.05);border-radius:6px;padding:.9rem 1.1rem;max-width:360px">
-      <strong style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);display:block;margin-bottom:.35rem">🎬 The Matrix Theory</strong>
-      <p style="font-size:12.5px;color:rgba(240,236,227,.52);line-height:1.7">"What if you could train 10,000 hours in a day?" Athletes today are entering simulated realities — not science fiction. Just sport.</p>
-    </div>
-  </div>
-  <!-- Immersive VR environment -->
-  <div class="s7r">
-    <div class="vr-env"></div>
-    <div class="scan-line"></div>
-    <!-- perspective grid floor -->
-    <div class="grid-floor">
-      <div class="grid-inner" id="vrGrid"></div>
-    </div>
-    <!-- VR Helmet SVG -->
-    <div class="helmet-wrap" id="helmetWrap">
-      <svg width="270" height="185" viewBox="0 0 270 185" fill="none">
-        <rect x="22" y="52" width="226" height="114" rx="32" fill="#160038" stroke="#7b3bff" stroke-width="2"/>
-        <rect x="38" y="68" width="194" height="78" rx="24" fill="#0c001f" stroke="#9b6bff" stroke-width="1.5"/>
-        <ellipse cx="88" cy="107" rx="36" ry="28" fill="#06001a" stroke="#8b4bef" stroke-width="1.5"/>
-        <ellipse cx="88" cy="107" rx="26" ry="19" fill="none" stroke="#9b6bff" stroke-width="1" opacity=".5"/>
-        <ellipse cx="88" cy="107" rx="18" ry="13" fill="rgba(155,107,255,.2)">
-          <animate attributeName="rx" values="18;22;18" dur="2s" repeatCount="indefinite"/>
-        </ellipse>
-        <ellipse cx="182" cy="107" rx="36" ry="28" fill="#06001a" stroke="#8b4bef" stroke-width="1.5"/>
-        <ellipse cx="182" cy="107" rx="26" ry="19" fill="none" stroke="#9b6bff" stroke-width="1" opacity=".5"/>
-        <ellipse cx="182" cy="107" rx="18" ry="13" fill="rgba(0,200,255,.18)">
-          <animate attributeName="rx" values="18;23;18" dur="2.6s" repeatCount="indefinite"/>
-        </ellipse>
-        <rect x="116" y="100" width="38" height="14" rx="7" fill="#1e0045" stroke="#6b3baf" stroke-width="1"/>
-        <rect x="2"   y="88" width="22" height="32" rx="9" fill="#100028" stroke="#4b2baf" stroke-width="1"/>
-        <rect x="246" y="88" width="22" height="32" rx="9" fill="#100028" stroke="#4b2baf" stroke-width="1"/>
-        <rect x="62" y="54" width="146" height="4" rx="2" fill="rgba(155,107,255,.65)"/>
-        <!-- scan inside visor -->
-        <rect x="39" y="95" width="192" height="2" fill="rgba(155,107,255,.35)">
-          <animateTransform attributeName="transform" type="translate" from="0,0" to="0,42" dur="1.6s" repeatCount="indefinite"/>
-        </rect>
-        <!-- glint -->
-        <ellipse cx="75" cy="95" rx="8" ry="4" fill="rgba(255,255,255,.12)"/>
-        <ellipse cx="169" cy="95" rx="8" ry="4" fill="rgba(255,255,255,.1)"/>
-      </svg>
-    </div>
-    <!-- floating HUD labels -->
-    <div class="vr-lbl" style="top:16%;left:6%;color:var(--neon);animation:float 4.2s 1s ease-in-out infinite">
-      🏃 Scenario: Penalty Kick
-      <span>Rep 47 / 100 · Difficulty: PRO</span>
-    </div>
-    <div class="vr-lbl" style="bottom:26%;right:5%;color:var(--purple);animation:float 5.1s .4s ease-in-out infinite">
-      🧠 Neural Load: 78%
-      <span>Focus Mode Active</span>
-    </div>
-    <div class="vr-lbl" style="top:44%;right:6%;color:var(--gold);animation:float 3.8s .8s ease-in-out infinite">
-      📍 GPS: Pitch Position
-      <span>Accuracy: ±2cm</span>
-    </div>
-  </div>
-</section>
-
-<!-- ══ S8 GOOD/BAD ══ -->
-<section class="slide" id="s8">
-  <h2 class="stitle rv" style="margin-bottom:2rem">CHANGED THE GAME.<br><span style="color:rgba(240,236,227,.22);font-size:.58em;font-family:'DM Serif Display',serif;font-style:italic">But at what cost?</span></h2>
-  <div class="vs-split rv rv-d1">
-    <div class="vc">
-      <div class="vh" style="background:rgba(0,255,224,.04)"><span style="font-size:1.2rem">✅</span><span class="vct" style="color:var(--neon)">The Wins</span></div>
-      <div class="vrow"><div class="vrt" style="color:var(--neon)">Fairer Decisions</div><div class="vrb">VAR & Hawk-Eye eliminate match-changing errors. The ref's ego is no longer the final word.</div></div>
-      <div class="vrow"><div class="vrt" style="color:var(--neon)">Athlete Safety</div><div class="vrb">Sensors detect overload before the body breaks. Careers last longer.</div></div>
-      <div class="vrow"><div class="vrt" style="color:var(--neon)">Global Access</div><div class="vrb">5 billion people watched the 2022 World Cup — drones, 4K, AR overlays brought sport to everyone.</div></div>
-      <div class="vrow"><div class="vrt" style="color:var(--neon)">Human Limits</div><div class="vrb">Athletes train smarter. VR. AI coaching. The ceiling keeps rising.</div></div>
-    </div>
-    <div class="vc">
-      <div class="vh" style="background:rgba(255,61,46,.04)"><span style="font-size:1.2rem">❌</span><span class="vct" style="color:var(--fire)">The Cost</span></div>
-      <div class="vrow"><div class="vrt" style="color:var(--fire)">VAR Kills the Moment</div><div class="vrb">You score. You celebrate. Then you wait 4 minutes. Joy delayed is joy destroyed.</div></div>
-      <div class="vrow"><div class="vrt" style="color:var(--fire)">Rich vs Poor</div><div class="vrb">Man City's AI scouting vs a League One spreadsheet. Tech widens the gap it was meant to close.</div></div>
-      <div class="vrow"><div class="vrt" style="color:var(--fire)">Tech Doping</div><div class="vrb">LZR suits. Vaporfly shoes. Carbon plates. Where does equipment end and cheating begin?</div></div>
-      <div class="vrow"><div class="vrt" style="color:var(--fire)">Players Become Numbers</div><div class="vrb">Coaches trust the algorithm over their eyes. The human game slowly disappears.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ S9 FUTURE ══ -->
-<section class="slide" id="s9">
-  <p class="seye rv">Sports in 2050</p>
-  <h2 class="stitle rv rv-d1" style="margin-bottom:2rem">WHAT COMES NEXT</h2>
-  <div class="fut-grid rv rv-d2">
-    <div class="fc" data-y="2030"><div class="fc-i">🤖</div><div class="fc-t" style="color:var(--neon)">Robotic Referees</div><p class="fc-b">100% accurate. Zero emotion. No arguments. But would you miss the outrage?</p></div>
-    <div class="fc" data-y="2035"><div class="fc-i">🧠</div><div class="fc-t" style="color:var(--purple)">Neural Coaching</div><p class="fc-b">Brain-computer interfaces whisper tactics to athletes mid-play. No earpiece needed.</p></div>
-    <div class="fc" data-y="2040"><div class="fc-i">🦾</div><div class="fc-t" style="color:var(--gold)">Exoskeleton Sport</div><p class="fc-b">Powered suits as a regulated category. Like motorsport — but for the human body.</p></div>
-    <div class="fc" data-y="2050"><div class="fc-i">🌌</div><div class="fc-t" style="color:var(--fire)">Zero-Gravity Arenas</div><p class="fc-b">NASA already has a zero-G basketball court designed for the ISS. This isn't science fiction.</p></div>
-  </div>
-</section>
-
-<!-- ══ S10 END ══ -->
-<section class="slide" id="s10">
-  <div class="end-glow"></div>
-  <p class="seye rv" style="text-align:center">The Verdict</p>
-  <p class="final rv rv-d1">Technology won't replace<br>the <span>MAGIC</span> of sport.</p>
-  <p class="fsub rv rv-d2">It will make it more fair, more exciting, and more human than ever before.<br>The ball still needs to cross the line.</p>
-  <div class="pills rv rv-d3">
-    <span class="pill">Fairer</span><span class="pill">Faster</span><span class="pill">Safer</span><span class="pill">Smarter</span><span class="pill">More Human</span>
-  </div>
-</section>
-
 <!-- ══ S11 SPEAKER 2 ══ -->
 <section class="slide" id="s11">
   <div class="spk-row rv">
@@ -727,6 +604,130 @@ body{font-family:'Syne',sans-serif;background:var(--ink);color:var(--paper);over
     </div>
   </div>
 </section>
+
+<!-- ══ S6 CULTURE ══ -->
+<section class="slide" id="s6">
+  <p class="seye rv">Culture & Cinema</p>
+  <h2 class="stitle rv rv-d1" style="margin-bottom:2rem">SPORT MEETS<br>SCIENCE FICTION</h2>
+  <div class="three-col rv rv-d2">
+    <div class="sc"><span class="sc-num">01</span><div class="sc-ico">🎬</div><div class="sc-tag" style="color:var(--neon)">Movie Theory</div><h3 class="sc-h">Moneyball (2011)</h3><p class="sc-b">Brad Pitt's Oakland A's used algorithms to out-compete richer clubs. A real story. The theory? Data beats instinct. Now every club on Earth runs on it.</p></div>
+    <div class="sc"><span class="sc-num">02</span><div class="sc-ico">🕷️</div><div class="sc-tag" style="color:var(--gold)">Origin Story</div><h3 class="sc-h">Spidercam Was Built for Spider-Man</h3><p class="sc-b">The wire-mounted flying camera above every Premier League pitch was originally designed for Spider-Man film sets. Hollywood tech became sports broadcast standard.</p></div>
+    <div class="sc"><span class="sc-num">03</span><div class="sc-ico">👟</div><div class="sc-tag" style="color:var(--fire)">Ethical Debate</div><h3 class="sc-h">Nike's "Illegal" Shoe</h3><p class="sc-b">The Vaporfly gives a proven 4% speed boost via a carbon fibre plate. World Athletics allowed it — then banned "super spikes" mid-season. The line keeps moving.</p></div>
+  </div>
+</section>
+
+<!-- ══ S7 VR ══ -->
+<section class="slide" id="s7">
+  <div class="s7l">
+    <p class="seye">Virtual Reality Training</p>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,4.8vw,60px);line-height:1;margin-bottom:1.2rem">TRAIN ANYWHERE.<br>FEAR NOTHING.</h2>
+    <p style="font-size:13px;color:rgba(240,236,227,.48);max-width:360px;line-height:1.75;margin-bottom:1.6rem">NFL teams run <strong style="color:var(--paper)">1,000 simulated plays a night.</strong> Steph Curry perfects his shot in VR. Man City players replay full matches inside a headset.</p>
+    <div class="vr-stat-row">
+      <div><div class="vs-n">40%</div><div class="vs-l">Faster decisions</div></div>
+      <div><div class="vs-n">0</div><div class="vs-l">Physical risk</div></div>
+      <div><div class="vs-n">∞</div><div class="vs-l">Reps possible</div></div>
+    </div>
+    <div style="margin-top:2rem;border:1px solid rgba(155,107,255,.28);background:rgba(155,107,255,.05);border-radius:6px;padding:.9rem 1.1rem;max-width:360px">
+      <strong style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);display:block;margin-bottom:.35rem">🎬 The Matrix Theory</strong>
+      <p style="font-size:12.5px;color:rgba(240,236,227,.52);line-height:1.7">"What if you could train 10,000 hours in a day?" Athletes today are entering simulated realities — not science fiction. Just sport.</p>
+    </div>
+  </div>
+  <!-- Immersive VR environment -->
+  <div class="s7r">
+    <div class="vr-env"></div>
+    <div class="scan-line"></div>
+    <!-- perspective grid floor -->
+    <div class="grid-floor">
+      <div class="grid-inner" id="vrGrid"></div>
+    </div>
+    <!-- VR Helmet SVG -->
+    <div class="helmet-wrap" id="helmetWrap">
+      <svg width="270" height="185" viewBox="0 0 270 185" fill="none">
+        <rect x="22" y="52" width="226" height="114" rx="32" fill="#160038" stroke="#7b3bff" stroke-width="2"/>
+        <rect x="38" y="68" width="194" height="78" rx="24" fill="#0c001f" stroke="#9b6bff" stroke-width="1.5"/>
+        <ellipse cx="88" cy="107" rx="36" ry="28" fill="#06001a" stroke="#8b4bef" stroke-width="1.5"/>
+        <ellipse cx="88" cy="107" rx="26" ry="19" fill="none" stroke="#9b6bff" stroke-width="1" opacity=".5"/>
+        <ellipse cx="88" cy="107" rx="18" ry="13" fill="rgba(155,107,255,.2)">
+          <animate attributeName="rx" values="18;22;18" dur="2s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="182" cy="107" rx="36" ry="28" fill="#06001a" stroke="#8b4bef" stroke-width="1.5"/>
+        <ellipse cx="182" cy="107" rx="26" ry="19" fill="none" stroke="#9b6bff" stroke-width="1" opacity=".5"/>
+        <ellipse cx="182" cy="107" rx="18" ry="13" fill="rgba(0,200,255,.18)">
+          <animate attributeName="rx" values="18;23;18" dur="2.6s" repeatCount="indefinite"/>
+        </ellipse>
+        <rect x="116" y="100" width="38" height="14" rx="7" fill="#1e0045" stroke="#6b3baf" stroke-width="1"/>
+        <rect x="2"   y="88" width="22" height="32" rx="9" fill="#100028" stroke="#4b2baf" stroke-width="1"/>
+        <rect x="246" y="88" width="22" height="32" rx="9" fill="#100028" stroke="#4b2baf" stroke-width="1"/>
+        <rect x="62" y="54" width="146" height="4" rx="2" fill="rgba(155,107,255,.65)"/>
+        <!-- scan inside visor -->
+        <rect x="39" y="95" width="192" height="2" fill="rgba(155,107,255,.35)">
+          <animateTransform attributeName="transform" type="translate" from="0,0" to="0,42" dur="1.6s" repeatCount="indefinite"/>
+        </rect>
+        <!-- glint -->
+        <ellipse cx="75" cy="95" rx="8" ry="4" fill="rgba(255,255,255,.12)"/>
+        <ellipse cx="169" cy="95" rx="8" ry="4" fill="rgba(255,255,255,.1)"/>
+      </svg>
+    </div>
+    <!-- floating HUD labels -->
+    <div class="vr-lbl" style="top:16%;left:6%;color:var(--neon);animation:float 4.2s 1s ease-in-out infinite">
+      🏃 Scenario: Penalty Kick
+      <span>Rep 47 / 100 · Difficulty: PRO</span>
+    </div>
+    <div class="vr-lbl" style="bottom:26%;right:5%;color:var(--purple);animation:float 5.1s .4s ease-in-out infinite">
+      🧠 Neural Load: 78%
+      <span>Focus Mode Active</span>
+    </div>
+    <div class="vr-lbl" style="top:44%;right:6%;color:var(--gold);animation:float 3.8s .8s ease-in-out infinite">
+      📍 GPS: Pitch Position
+      <span>Accuracy: ±2cm</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S8 GOOD/BAD ══ -->
+<section class="slide" id="s8">
+  <h2 class="stitle rv" style="margin-bottom:2rem">CHANGED THE GAME.<br><span style="color:rgba(240,236,227,.22);font-size:.58em;font-family:'DM Serif Display',serif;font-style:italic">But at what cost?</span></h2>
+  <div class="vs-split rv rv-d1">
+    <div class="vc">
+      <div class="vh" style="background:rgba(0,255,224,.04)"><span style="font-size:1.2rem">✅</span><span class="vct" style="color:var(--neon)">The Wins</span></div>
+      <div class="vrow"><div class="vrt" style="color:var(--neon)">Fairer Decisions</div><div class="vrb">VAR & Hawk-Eye eliminate match-changing errors. The ref's ego is no longer the final word.</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--neon)">Athlete Safety</div><div class="vrb">Sensors detect overload before the body breaks. Careers last longer.</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--neon)">Global Access</div><div class="vrb">5 billion people watched the 2022 World Cup — drones, 4K, AR overlays brought sport to everyone.</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--neon)">Human Limits</div><div class="vrb">Athletes train smarter. VR. AI coaching. The ceiling keeps rising.</div></div>
+    </div>
+    <div class="vc">
+      <div class="vh" style="background:rgba(255,61,46,.04)"><span style="font-size:1.2rem">❌</span><span class="vct" style="color:var(--fire)">The Cost</span></div>
+      <div class="vrow"><div class="vrt" style="color:var(--fire)">VAR Kills the Moment</div><div class="vrb">You score. You celebrate. Then you wait 4 minutes. Joy delayed is joy destroyed.</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--fire)">Rich vs Poor</div><div class="vrb">Man City's AI scouting vs a League One spreadsheet. Tech widens the gap it was meant to close.</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--fire)">Tech Doping</div><div class="vrb">LZR suits. Vaporfly shoes. Carbon plates. Where does equipment end and cheating begin?</div></div>
+      <div class="vrow"><div class="vrt" style="color:var(--fire)">Players Become Numbers</div><div class="vrb">Coaches trust the algorithm over their eyes. The human game slowly disappears.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S9 FUTURE ══ -->
+<section class="slide" id="s9">
+  <p class="seye rv">Sports in 2050</p>
+  <h2 class="stitle rv rv-d1" style="margin-bottom:2rem">WHAT COMES NEXT</h2>
+  <div class="fut-grid rv rv-d2">
+    <div class="fc" data-y="2030"><div class="fc-i">🤖</div><div class="fc-t" style="color:var(--neon)">Robotic Referees</div><p class="fc-b">100% accurate. Zero emotion. No arguments. But would you miss the outrage?</p></div>
+    <div class="fc" data-y="2035"><div class="fc-i">🧠</div><div class="fc-t" style="color:var(--purple)">Neural Coaching</div><p class="fc-b">Brain-computer interfaces whisper tactics to athletes mid-play. No earpiece needed.</p></div>
+    <div class="fc" data-y="2040"><div class="fc-i">🦾</div><div class="fc-t" style="color:var(--gold)">Exoskeleton Sport</div><p class="fc-b">Powered suits as a regulated category. Like motorsport — but for the human body.</p></div>
+    <div class="fc" data-y="2050"><div class="fc-i">🌌</div><div class="fc-t" style="color:var(--fire)">Zero-Gravity Arenas</div><p class="fc-b">NASA already has a zero-G basketball court designed for the ISS. This isn't science fiction.</p></div>
+  </div>
+</section>
+
+<!-- ══ S10 END ══ -->
+<section class="slide" id="s10">
+  <div class="end-glow"></div>
+  <p class="seye rv" style="text-align:center">The Verdict</p>
+  <p class="final rv rv-d1">Technology won't replace<br>the <span>MAGIC</span> of sport.</p>
+  <p class="fsub rv rv-d2">It will make it more fair, more exciting, and more human than ever before.<br>The ball still needs to cross the line.</p>
+  <div class="pills rv rv-d3">
+    <span class="pill">Fairer</span><span class="pill">Faster</span><span class="pill">Safer</span><span class="pill">Smarter</span><span class="pill">More Human</span>
+  </div>
+</section>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
